@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width-device-width,intial-scale=1.0">
+        <title>Movieinfo App in Javascript</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css"/>
+ <style>
+    body {
+        background-color:rgb(205, 255, 253);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    
+    }
+
+ </style>
+
+    </head>
+    <body>
+        <div class="container">
+            <h1 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;" class="text-center mt-5">
+                🅼🅾🆅🅸🅴-🆃🆁🅴🅰🆂🆄🆁🅴
+
+            </h1>
+            <br>
+            <p><b>NOTE : </b>To Get the full functionality of the website kindly visit site settings and remove default setting of insecure content. </p>
+            <form autocomplete="off" id="movieForm">
+                <div class="form-group">
+                    <label style=" font-family: Baskerville" for="Movie">ENTER A MOVIE NAME</label>
+                    <input type="text" class="form-control" id="movie" placeholder="Movie...">
+                </div>
+                <div  class="form-group">
+                    <button    style="background-color:green; border-color:red; color:white" class="btn btn-danger btn-block">Search Movie</button>
+                </div>
+            </form>
+            <div id="result2">
+
+            </div>
+            <div id="result"></div>
+            <div id="result2">
+
+            </div>
+
+        </div>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var apikey="cbe700ad"
+    
+            $("#movieForm").submit(function(event){
+                event.preventDefault()
+                var movie=$("#movie").val()
+                var result =""
+                var result2= "" 
+                var url="http://www.omdbapi.com/?apikey="+apikey
+              $.ajax({
+                method:'GET',
+                url:url+"&t="+movie,
+            
+     
+  
+                success:function(data){
+                    console.log(data)
+                  ///  console.log(result2)
+                  var temp= data.Response
+                    if( temp === "False") {
+                     let result2=  ` <h2 ><b>OOPS!!!.. &#128533;</b>Please check the spelling and try again.</h2>`
+                
+                        console.log("Movie Not Found")
+                        $("#result2").html(result2)
+
+                    }
+                else{
+            
+                    result=`
+                   <img src="${data.Poster}" style="float:left,padding-right:20px" class="img-thumnail" width="550" height="550"/>
+                   <br><br>
+                   <h2  style="font-family:Baskerville;" >Movie Name : ${data.Title}.</h2>
+                   <h2 style="font-family:Baskerville;">Released Year : ${data.Released}.</h2>
+                   <h2 style="font-family:Baskerville;">Runtime : ${data.Runtime}.</h2>
+                   <h2 style="font-family:Baskerville;">Genre : ${data.Genre}.</h2>
+                   <h2 style="font-family:Baskerville;">Director : ${data.Director}.</h2>
+                   <h2 style="font-family:Baskerville;">Actors : ${data.Actors}.</h2>
+                   <h2 style="font-family:Baskerville;">Language : ${data.Language}.</h2>
+                   <h2 style="font-family:Baskerville;">Imdb : ${data.imdbRating}.</h2>
+                   <h2 style="font-family:Baskerville;">RottenTomatos : ${data.Ratings[1].Value}</h2>
+                   <p style="font-family:Baskerville" >Plot : ${data.Plot}</p>
+
+                    `
+                    $("#result").html(result)
+                }
+                }
+      
+     /* result2=`
+  <h2 ><b>OOPS!!!.. &#128533;</b>Please check the spelling and try again.</h2>
+
+      `
+     $("#result2").html(result2)
+  }*/
+                    
+                   
+                
+                 
+
+              })
+
+            })
+            
+
+         } )
+    </script>
+</html>
